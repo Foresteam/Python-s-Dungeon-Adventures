@@ -58,6 +58,9 @@ public:
 	Vector operator-(const Vector& v2) {
 		return Vector(x - v2.x, y - v2.y).Normalize();
 	}
+	bool operator==(const Vector& v2) {
+		return x == v2.x && y == v2.y;
+	}
 	Vector Normalize();
 	static Vector Random();
 };

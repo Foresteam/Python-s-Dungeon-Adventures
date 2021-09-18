@@ -25,8 +25,8 @@ Vector Vector::Random() {
 }
 std::random_device Vector::rd;
 std::mt19937 Vector::gen = std::mt19937(rd());
-std::uniform_int_distribution<> Vector::distrx = std::uniform_int_distribution<>(0, SCR_X);
-std::uniform_int_distribution<> Vector::distry = std::uniform_int_distribution<>(0, SCR_Y);
+std::uniform_int_distribution<> Vector::distrx = std::uniform_int_distribution<>(0, SCR_X - 1);
+std::uniform_int_distribution<> Vector::distry = std::uniform_int_distribution<>(0, SCR_Y - 1);
 
 Representation::Representation(std::string chr, Color::Modifier color) {
 	this->chr = chr;

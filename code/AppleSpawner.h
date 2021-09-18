@@ -5,7 +5,7 @@
 class AppleSpawner : public Spawner {
 private:
     int ticks;
-    const int ticksToSpawn = 3;
+    const int ticksToSpawn = 10;
 
 public:
     AppleSpawner();

@@ -39,9 +39,17 @@ void Engine::Render() {
 		}
 	}
 	system("clear");
-	for (int i = 0; i < SCR_Y; i++) {
-		for (int j = 0; j < SCR_X; j++)
-			std::cout << renderWorld[j][i];
+	for (int i = 0; i < SCR_Y + 1; i++) {
+		for (int j = 0; j < SCR_X + 1; j++) {
+			if (j < SCR_X && i < SCR_Y)
+				std::cout << renderWorld[j][i];
+			else
+				std::cout << Representation("#", Color::Modifier(Color::Code::FG_DEFAULT));
+			if (j == SCR_X && i == 10) {
+				std::cout << Color::Modifier(Color::Code::FG_DEFAULT);
+				printf("Score: %i", score);
+			}
+		}
 		std::cout << std::endl;
 	}
 }
@@ -55,9 +63,18 @@ bool Engine::Update() {
 		if (e)
 			RegisterEntity(e);
 	}
-	for (Entity* entity : entities)
-		if (entity->GetFlags() & Entity::Flags::Movable)
-			dynamic_cast<IMovable*>(entity)->Move();
+	for (Entity* mover : entities)
+		if (mover->GetFlags() & Entity::Flags::Movable) {
+			dynamic_cast<IMovable*>(mover)->Move();
+			Vector newPos = mover->GetPos();
+			for (auto it = entities.rbegin(); it != entities.rend(); it++) {
+				Entity* entity = *it;
+				if (entity != mover) {
+					if (entity->GetPos() == newPos && entity->GetFlags() & Entity::Flags::Interractable)
+						dynamic_cast<IInterractable*>(entity)->Interract(mover);
+				}
+			}
+		}
 	return true;
 }
 void Engine::SubscribeKeyboardEvent(KeyboardSubscriber sub) {
@@ -82,10 +99,10 @@ void Engine::RegisterEntity(Entity* entity) {
 	entities.push_back(entity);
 }
 void Engine::RemoveEntity(Entity* entity) {
-	entities.remove(entity);
 	for (Spawner* s : spawners)
 		s->Remove(entity);
-	delete entity;
+	entities.remove(entity);
+	// delete entity;
 }
 void Engine::SetSpeed(double speed) {
 	frameInterval = 1. / speed;

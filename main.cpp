@@ -7,15 +7,17 @@
 #include "code/BaseEntities.h"
 #include "code/Engine.h"
 #include "code/Snake.h"
+#include "code/AppleSpawner.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {
 	Engine* engine = Engine::GetInstance();
-	engine->SetSpeed(10);
+	engine->SetSpeed(5);
 
 	Snake* snake = new Snake(Vector());
 	engine->RegisterEntity(dynamic_cast<Entity*>(snake));
 	engine->SubscribeKeyboardEvent([snake](char c) { snake->Control(c); });
+	engine->RegisterSpawner(new AppleSpawner());
 
 	shared_ptr<bool> gameExit = make_shared<bool>(new bool());
 	*gameExit = false;
