@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(SnakesDungeonAdventures VERSION 0.1.0)
+project(PythonsDungeonAdventures VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
 
-add_executable(SnakesDungeonAdventures
+add_executable(PythonsDungeonAdventures
     code/Config.h
     code/AbstractionsUtils.h
     code/AbstractionsUtils.cpp
@@ -25,7 +25,7 @@ add_executable(SnakesDungeonAdventures
 
 add_compile_options(--std=gnu++20)
 
-target_link_libraries(SnakesDungeonAdventures pthread)
+target_link_libraries(PythonsDungeonAdventures pthread)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
