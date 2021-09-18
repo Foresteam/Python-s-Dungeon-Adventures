@@ -8,7 +8,7 @@ void Apple::Interract(Entity* interractor) {
     Engine* engine = Engine::GetInstance();
 
     if (interractor->GetFlags() & Growable)
-        dynamic_cast<GrowableEntity*>(interractor)->Grow(1);
+        dynamic_cast<IGrowable*>(interractor)->Grow(1);
 
     engine->AddScore(1);
     engine->RemoveEntity(this);

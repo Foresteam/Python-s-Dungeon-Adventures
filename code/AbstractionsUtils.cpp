@@ -8,9 +8,8 @@ Vector::Vector(int x, int y) {
 	this->x = x;
 	this->y = y;
 }
-Vector::Vector() : Vector::Vector(0, 0) {}
-Vector Vector::Normalized(Vector vec) {
-	int x = vec.x + SCR_X / 2, y = vec.y + SCR_Y / 2;
+Vector::Vector() : Vector::Vector(SCR_X / 2, SCR_Y / 2) {}
+Vector Vector::Normalize() {
 	if (x < 0)
 		x += SCR_X;
 	if (y < 0)
@@ -19,15 +18,15 @@ Vector Vector::Normalized(Vector vec) {
 		x -= SCR_X;
 	if (y >= SCR_Y)
 		y -= SCR_Y;
-	return Vector(x, y);
+	return *this;
 }
 Vector Vector::Random() {
 	return Vector(distrx(gen), distry(gen));
 }
 std::random_device Vector::rd;
 std::mt19937 Vector::gen = std::mt19937(rd());
-std::uniform_int_distribution<> Vector::distrx = std::uniform_int_distribution<>(-SCR_X / 2, SCR_X / 2);
-std::uniform_int_distribution<> Vector::distry = std::uniform_int_distribution<>(-SCR_Y / 2, SCR_Y / 2);
+std::uniform_int_distribution<> Vector::distrx = std::uniform_int_distribution<>(0, SCR_X);
+std::uniform_int_distribution<> Vector::distry = std::uniform_int_distribution<>(0, SCR_Y);
 
 Representation::Representation(std::string chr, Color::Modifier color) {
 	this->chr = chr;

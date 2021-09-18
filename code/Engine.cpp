@@ -34,7 +34,7 @@ void Engine::Render() {
 	for (Entity* entity : entities) {
 		auto RD = entity->GetRenderData();
 		for (RenderData rd : RD) {
-			rd.pos = Vector::Normalized(rd.pos);
+			// rd.pos = Vector::Normalized(rd.pos);
 			renderWorld[rd.pos.x][rd.pos.y] = rd.rpr;
 		}
 	}
@@ -57,7 +57,7 @@ bool Engine::Update() {
 	}
 	for (Entity* entity : entities)
 		if (entity->GetFlags() & Entity::Flags::Movable)
-			dynamic_cast<MovableEntity*>(entity)->Move();
+			dynamic_cast<IMovable*>(entity)->Move();
 	return true;
 }
 void Engine::SubscribeKeyboardEvent(KeyboardSubscriber sub) {

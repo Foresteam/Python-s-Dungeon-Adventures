@@ -42,23 +42,23 @@ public:
 };
 
 // typedef void (*SetPosFunc)(Entity*, Vector);
-class MovableEntity {
+class IMovable {
 public:
-	MovableEntity() = default;
+	IMovable() = default;
 	virtual void Move() = 0;
 };
 // class SolidEntity {};
 
-class InteractableEntity {
+class IInterractable {
 protected:
-	InteractableEntity() = default;
+	IInterractable() = default;
 public:
 	virtual void Interract(Entity* interractor) = 0;
 };
 
-class GrowableEntity {
+class IGrowable {
 protected:
-	GrowableEntity() = default;
+	IGrowable() = default;
 public:
 	virtual void Grow(unsigned int amount) = 0;
 };

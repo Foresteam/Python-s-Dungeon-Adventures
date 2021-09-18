@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "BaseEntities.h"
 
-class Snake : public Entity, public MovableEntity, public GrowableEntity {
+class Snake : public Entity, public IMovable, public IGrowable {
 private:
 	enum Direction {
 		INVALID = 0,

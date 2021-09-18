@@ -53,12 +53,12 @@ public:
 			return std::max(x, y) < std::max(v.x, v.y);
 	}
 	Vector operator+(const Vector& v2) {
-		return Vector(x + v2.x, y + v2.y);
+		return Vector(x + v2.x, y + v2.y).Normalize();
 	}
 	Vector operator-(const Vector& v2) {
-		return Vector(x - v2.x, y - v2.y);
+		return Vector(x - v2.x, y - v2.y).Normalize();
 	}
-	static Vector Normalized(Vector vec);
+	Vector Normalize();
 	static Vector Random();
 };
 
