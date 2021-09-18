@@ -28,7 +28,7 @@ public:
 	static Engine* GetInstance();
 	static void Dispose();
 
-	void Render();
+	bool Render();
 	bool Update();
 	static void SubscribeKeyboardEvent(KeyboardSubscriber sub);
 	static void KeyboardThread(std::shared_ptr<bool> finished);

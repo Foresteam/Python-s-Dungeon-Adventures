@@ -46,6 +46,7 @@ class IMovable {
 public:
 	IMovable() = default;
 	virtual void Move() = 0;
+	virtual bool CheckSelfCollision() = 0;
 };
 // class SolidEntity {};
 

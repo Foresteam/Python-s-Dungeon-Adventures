@@ -16,10 +16,12 @@ private:
 	public:
 		HeadEntity(Vector pos);
 		void UpdateDirection(Direction direction);
+		void Die();
 	};
 	class BodyEntity : public Entity {
 	public:
 		BodyEntity(Vector pos);
+		void Die();
 	};
 
 	HeadEntity* head;
@@ -30,6 +32,8 @@ public:
 	Snake(Vector pos);
 	~Snake();
 	void Move() override;
+	bool CheckSelfCollision() override;
+	void Die();
 	void Grow(unsigned int amount) override;
 	Vector GetPos() override;
 	void Control(char code);

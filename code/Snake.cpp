@@ -21,8 +21,14 @@ void Snake::HeadEntity::UpdateDirection(Direction direction) {
 			break;
 	}
 }
+void Snake::HeadEntity::Die() {
+	representation = Representation("X", Color::Modifier(Color::Code::FG_CYAN));
+}
 
 Snake::BodyEntity::BodyEntity(Vector pos) : Entity(pos, Representation("■", Color::Modifier(Color::Code::FG_BLUE))) {}
+void Snake::BodyEntity::Die() {
+	representation = Representation("X", Color::Modifier(Color::Code::FG_BLUE));
+}
 
 Snake::Snake(Vector pos) : Entity() {
 	flags |= Player;
@@ -32,8 +38,8 @@ Snake::Snake(Vector pos) : Entity() {
 	velocity = std::make_shared<Vector>(Vector(0, 1));
 	head->UpdateDirection(DOWN);
 	body = std::list<BodyEntity*>();
-	for (int i = 0; i < 5; i++)
-		body.push_back(new BodyEntity(pos));
+	// for (int i = 0; i < 5; i++)
+	// 	body.push_back(new BodyEntity(pos));
 }
 Snake::~Snake() {
 	delete head;
@@ -50,9 +56,22 @@ void Snake::Move() {
 		engine->SetEntityPos(be, _prevPos);
 	}
 }
+bool Snake::CheckSelfCollision() {
+	for (BodyEntity* be : body)
+		if (be->GetPos() == head->GetPos()) {
+			Die();
+			return true;
+		}
+	return false;
+}
+void Snake::Die() {
+	head->Die();
+	for (BodyEntity* be : body)
+		be->Die();
+}
 void Snake::Grow(unsigned int amount) {
 	for (unsigned int i = 0; i < amount; i++)
-		body.push_back(new BodyEntity(body.back()->GetPos()));
+		body.push_back(new BodyEntity(body.size() > 0 ? body.back()->GetPos() : head->GetPos()));
 }
 Vector Snake::GetPos() {
 	return head->GetPos();

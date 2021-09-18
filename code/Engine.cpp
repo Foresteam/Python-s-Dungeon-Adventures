@@ -8,7 +8,7 @@ Engine* Engine::_instance = nullptr;
 std::list<KeyboardSubscriber> Engine::keyboardEvents = std::list<KeyboardSubscriber>();
 
 Engine::Engine() {
-	gameOver = true;
+	gameOver = false;
 	score = 0;
 	keyboardEvents.clear();
 	spawners.clear();
@@ -27,7 +27,7 @@ Engine* Engine::GetInstance() {
 }
 void Engine::Dispose() { delete _instance; }
 
-void Engine::Render() {
+bool Engine::Render() {
 	for (int i = 0; i < SCR_Y; i++)
 		for (int j = 0; j < SCR_X; j++)
 			renderWorld[j][i] = Representation();
@@ -45,18 +45,27 @@ void Engine::Render() {
 				std::cout << renderWorld[j][i];
 			else
 				std::cout << Representation("#", Color::Modifier(Color::Code::FG_DEFAULT));
-			if (j == SCR_X && i == 10) {
-				std::cout << Color::Modifier(Color::Code::FG_DEFAULT);
-				printf("Score: %i", score);
+			if (j == SCR_X) {
+				if (i == 10) {
+					std::cout << Color::Modifier(Color::Code::FG_DEFAULT) << ' ';
+					printf("Score: %i", score);
+				}
+				if (i == 11) {
+					std::cout << Color::Modifier(Color::Code::FG_DEFAULT) << ' ';
+					printf("Game over: %s", gameOver ? "yes" : "no");
+				}
 			}
 		}
 		std::cout << std::endl;
 	}
+	return gameOver;
 }
 bool Engine::Update() {
 	if (double(std::clock() - frameTimer) / CLOCKS_PER_SEC < frameInterval)
 		return false;
 	frameTimer = std::clock();
+	if (gameOver)
+		return true;
 	// std::this_thread::sleep_for(std::chrono::milliseconds(frameInterval));
 	for (Spawner* spawner : spawners) {
 		Entity* e = spawner->Spawn();
@@ -69,10 +78,13 @@ bool Engine::Update() {
 			Vector newPos = mover->GetPos();
 			for (auto it = entities.rbegin(); it != entities.rend(); it++) {
 				Entity* entity = *it;
-				if (entity != mover) {
+				if (entity == mover) {
+					if (dynamic_cast<IMovable*>(entity)->CheckSelfCollision() && entity->GetFlags() & Entity::Flags::Player)
+						gameOver = true;
+				}
+				else
 					if (entity->GetPos() == newPos && entity->GetFlags() & Entity::Flags::Interractable)
 						dynamic_cast<IInterractable*>(entity)->Interract(mover);
-				}
 			}
 		}
 	return true;

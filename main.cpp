@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <list>
-#include<thread>
+#include <thread>
 // #include "/usr/include/ois/OIS.h" // #include <OIS.h>
 #include "code/AbstractionsUtils.h"
 #include "code/BaseEntities.h"
@@ -25,7 +25,8 @@ int main(int argc, char* argv[]) {
 	while (true) { // main cycle
 		if (!engine->Update())
 			continue;
-		engine->Render();
+		if (engine->Render())
+			break;
 		if (*gameExit)
 			break;
 	}
