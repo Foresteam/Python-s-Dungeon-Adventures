@@ -2,12 +2,11 @@
 #include <iostream>
 #include <list>
 #include <thread>
-// #include "/usr/include/ois/OIS.h" // #include <OIS.h>
-#include "code/AbstractionsUtils.h"
-#include "code/BaseEntities.h"
-#include "code/Engine.h"
-#include "code/Snake.h"
-#include "code/AppleSpawner.h"
+#include "AbstractionsUtils.h"
+#include "BaseEntities.h"
+#include "Engine.h"
+#include "Snake.h"
+#include "AppleSpawner.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {

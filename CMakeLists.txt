@@ -20,7 +20,7 @@ add_executable(PythonsDungeonAdventures
     code/Snake.cpp
     code/Apple.h
     code/Apple.cpp
-    main.cpp
+    code/main.cpp
 )
 
 add_compile_options(--std=gnu++20)
